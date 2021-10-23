@@ -1,0 +1,37 @@
+{
+  "name": "basic-cms-api",
+  "version": "1.0.0",
+  "description": "A basic Express CMS",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development node index.js",
+    "db:create": "sequelize db:create",
+    "test-watch": "jest --watchAll",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basic-cms/basic-cms-api.git"
+  },
+  "author": "MuckT, Antoni909",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/basic-cms/basic-cms-api/issues"
+  },
+  "homepage": "https://github.com/basic-cms/basic-cms-api#readme",
+  "dependencies": {
+    "base-64": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.1",
+    "sequelize": "^6.7.0"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1",
+    "supertest": "^6.1.6",
+    "sqlite3": "blubaustin/node-sqlite3"
+  }
+}
