@@ -3,7 +3,7 @@ module.exports = {
   development: {
     username: process.env.DEV_DB_USERNAME,
     password: process.env.DEV_DB_PASSWORD,
-    database: 'authdb',
+    database: 'basic-cms-api',
     host: '127.0.0.1',
     dialect: 'postgres'
   },
