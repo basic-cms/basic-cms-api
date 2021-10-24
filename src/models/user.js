@@ -68,7 +68,6 @@ const userModel = (sequelize, DataTypes) => {
       throw new Error(e.message)
     }
   }
-
   return model
 }
 
