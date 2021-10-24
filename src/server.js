@@ -6,7 +6,8 @@ const express = require('express')
 // Handlers and Routes
 // const errorHandler = require('./error-handlers/500')
 // const notFound = require('./error-handlers/404')
-// const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 // Prepare the express app
 const app = express()
@@ -26,8 +27,9 @@ app.get('/bad', (req, res, next) => {
   next('you\'ve messed up')
 })
 
-// TODO: Enable when created - Routes 
-// app.use(authRoutes)
+// Routes 
+app.use(authRoutes)
+app.use(userRoutes)
 
 // Use Handlers
 // app.use(notFound)
