@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development node index.js",
     "db:create": "sequelize db:create",
     "test-watch": "jest --watchAll",
-    "test": "jest --coverage"
+    "test": "jest --coverage --verbose",
+    "ci:test": "jest --coverage --verbose --silent"
   },
   "repository": {
     "type": "git",
