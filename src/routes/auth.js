@@ -4,7 +4,7 @@ const express = require('express')
 const authRouter = express.Router()
 
 const { users } = require('../models/index')
-const auth = require('../middleware/auth')
+const { basic } = require('../middleware/auth')
 
 authRouter.post('/signup', async (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ authRouter.post('/signup', async (req, res, next) => {
   }
 })
 
-authRouter.post('/signin', auth.basic(users), async (req, res, next) => {
+authRouter.post('/signin', basic(users), async (req, res, next) => {
   try {
     const user = {
       username: req.user.username,

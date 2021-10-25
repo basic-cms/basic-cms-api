@@ -6,24 +6,19 @@ const postModel = (sequelize, DataTypes) => {
     title: { 
       type: DataTypes.STRING, 
       allowNull: false, 
-      unique: true 
+      unique: false 
     },
-    // user_id : {
-    //   type: DataTypes.UUID,
-    //   allowNull: false
-    // },
+    user_id : {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     body: { 
       type: DataTypes.TEXT, 
       allowNull: false,
       default: '', 
-    },
-    // date_posted:{
-    //   type: DataTypes.DATE,
-    //   allowNull: false,
-    // },
-      
+    },  
   }) 
- 
+
   return model
 }
 
