@@ -17,6 +17,14 @@ beforeAll(async () => {
       role: 'admin',
       createdAt: new Date('2021-10-23'),
       updatedAt: new Date('2021-10-24'),
+    },
+    {
+      id: 1,
+      username: 'Eldridge_Gleichner@test.com',
+      password: '$2a$10$Fqywv3inRmR5EMdndLiNzO9SKurjWgVJQ58gtpM.5MIzkAZja9bBm',
+      role: 'user',
+      createdAt: new Date('2021-10-23'),
+      updatedAt: new Date('2021-10-24'),
     }
   ])
   // Create Posts
@@ -54,7 +62,7 @@ afterAll(async () => {
 
 describe('Given GET', () => {
   describe(`When '/posts'`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then retrieves all posts', async () => {
       const response = await mockRequest.get('/posts')
       expect(response.status).toStrictEqual(200)
       expect(response.body).toStrictEqual([
@@ -86,7 +94,7 @@ describe('Given GET', () => {
     })
   })
   describe(`When '/post/:id'`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then retrieves a post by id', async () => {
       const response = await mockRequest.get( '/post/1')
       expect(response.status).toStrictEqual(200)
       expect(response.body).toStrictEqual(
@@ -102,7 +110,7 @@ describe('Given GET', () => {
     })
   })
   describe(`When '/post/:user_id'`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then retrieves all posts by a user', async () => {
       const response = await mockRequest.get('/posts/0')
       expect(response.status).toStrictEqual(200)
       expect(response.body).toStrictEqual([
@@ -129,7 +137,7 @@ describe('Given GET', () => {
 
 describe('Given POST', () => {
   describe(`When '/post'`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then creates a post by user', async () => {
       const requestBody = {
         title: 'Sample Title',
         body: 'Sample Body',
@@ -146,7 +154,7 @@ describe('Given POST', () => {
 
 describe('Given PUT', () => {
   describe(`When '/post/:id'`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then updates a post', async () => {
       const requestBody = {
         title: 'Sample Changed Title',
         body: 'Sample Changed Body',
@@ -161,11 +169,18 @@ describe('Given PUT', () => {
 
 describe('Given DELETE', () => {
   describe(`When '/post/:id`, () => {
-    it('Then returns correct response body & status', async () => {
+    it('Then an admin is able to delete a post', async () => {
       let user = await users.findOne({where: { id: 0 } })
       const response = await mockRequest.delete('/post/0').set('Authorization', `Bearer ${user.token}`)
       expect(response.status).toStrictEqual(200)
       expect(response.body).toStrictEqual(1)
+    })
+
+    it('Then a user is unable to delete a post', async () => {
+      let user = await users.findOne({where: { id: 1} })
+      const response = await mockRequest.delete('/post/1').set('Authorization', `Bearer ${user.token}`)
+      console.log(response.body)
+      expect(response.status).toStrictEqual(500)
     })
   })
 })
