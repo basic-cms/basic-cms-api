@@ -6,10 +6,11 @@ const postRouter = express.Router()
 
 const { acl , bearer } = require('../middleware/auth')
 
-postRouter.get('/post', handleGetAll)
+postRouter.get('/posts', handleGetAll)
+postRouter.get('/posts/:userId', handleGetAllByUser)
 postRouter.get('/post/:id', bearer(users), handleGetOne)
-postRouter.post('/post',bearer(users), acl('create'), handleCreate)
-postRouter.put('/post/:id',bearer(users), acl('update'), handleUpdate)
+postRouter.post('/post', bearer(users), acl('create'), handleCreate)
+postRouter.put('/post/:id', bearer(users), acl('update'), handleUpdate)
 postRouter.delete('/post/:id',bearer(users), acl('delete'), handleDelete)
 
 // GET All Posts if auth || no-auth
@@ -22,15 +23,19 @@ async function handleGetAll(req,res,next){
   }
 }
 // POST 1 Post  if >=User only
-async function handleCreate(req,res,next){
+async function handleCreate(req, res, next){
   try{
     req.post = req.body
+    req.post.user_id = req.user.id
     let newPost = await posts.create(req.post)
     res.status(200).json(newPost)
   }catch(e){
     console.error(e.message)
+  } finally {
+    next()
   }
 }
+
 // GET 1 Post   if >=Writer
 async function handleGetOne(req,res,next){
   try{
@@ -41,6 +46,18 @@ async function handleGetOne(req,res,next){
     console.error(e.message)
   }
 }
+
+// Get All Post By User
+async function handleGetAllByUser(req,res,next) {
+  try{
+    let userId = ~~req.params.userId
+    let retrievedPosts = await posts.findAll({ where: { user_id: userId }} )
+    res.status(200).json(retrievedPosts)
+  }catch(e) {
+    console.error(e.message)
+  }
+}
+
 // PUT 1 Post   if >=Editor
 async function handleUpdate(req,res,next){
   try{
