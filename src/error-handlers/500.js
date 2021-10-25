@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = (err, req, res, next) => {
-  console.error(err.stack)
+  if (res.headersSent) { return next(err) }
   res.status(500).send('Something broke')
 };
