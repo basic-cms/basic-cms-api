@@ -18,8 +18,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains multiple jobs
-  lint:
   # Based on https://github.com/valora-inc/wallet/blob/main/.github/workflows/check.yml
   lint: 
     name: Lint
