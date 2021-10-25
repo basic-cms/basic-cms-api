@@ -8,6 +8,7 @@ const express = require('express')
 // const notFound = require('./error-handlers/404')
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
+const postRoutes = require('./routes/post')
 
 // Prepare the express app
 const app = express()
@@ -30,6 +31,7 @@ app.get('/bad', (req, res, next) => {
 // Routes 
 app.use(authRoutes)
 app.use(userRoutes)
+app.use(postRoutes)
 
 // Use Handlers
 // app.use(notFound)

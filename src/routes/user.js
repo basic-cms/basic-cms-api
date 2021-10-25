@@ -6,8 +6,9 @@ const userRouter = express.Router()
 const { users } = require('../models/index')
 const auth = require('../middleware/auth')
 
-// GET User
+// GET User - User Reads 
 userRouter.get('/user', auth.bearer(users), async(req, res, next) => {
+  console.log(req.user.username)
   const user = await users.findOne({ where: {username: req.user.username}})
   res.status(200).json(user)
 })
