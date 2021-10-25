@@ -3,7 +3,6 @@
 const supertest = require('supertest')
 const { db, posts, users } = require('../models')
 const { server } = require('../server')
-const { bearer } = require('../middleware/auth')
 const mockRequest = supertest(server)
 
 beforeAll(async () => {
@@ -61,7 +60,7 @@ afterAll(async () => {
 })
 
 describe('Given GET', () => {
-  describe(`When '/posts'`, () => {
+  describe("When '/posts'", () => {
     it('Then retrieves all posts', async () => {
       const response = await mockRequest.get('/posts')
       expect(response.status).toStrictEqual(200)
@@ -93,7 +92,7 @@ describe('Given GET', () => {
       ])
     })
   })
-  describe(`When '/post/:id'`, () => {
+  describe("When '/post/:id'", () => {
     it('Then retrieves a post by id', async () => {
       const response = await mockRequest.get( '/post/1')
       expect(response.status).toStrictEqual(200)
@@ -109,7 +108,7 @@ describe('Given GET', () => {
       )
     })
   })
-  describe(`When '/post/:user_id'`, () => {
+  describe("When '/post/:user_id'", () => {
     it('Then retrieves all posts by a user', async () => {
       const response = await mockRequest.get('/posts/0')
       expect(response.status).toStrictEqual(200)
@@ -136,7 +135,7 @@ describe('Given GET', () => {
 })
 
 describe('Given POST', () => {
-  describe(`When '/post'`, () => {
+  describe("When '/post'", () => {
     it('Then creates a post by user', async () => {
       const requestBody = {
         title: 'Sample Title',
@@ -153,7 +152,7 @@ describe('Given POST', () => {
 })
 
 describe('Given PUT', () => {
-  describe(`When '/post/:id'`, () => {
+  describe("When '/post/:id'", () => {
     it('Then updates a post', async () => {
       const requestBody = {
         title: 'Sample Changed Title',
@@ -168,7 +167,7 @@ describe('Given PUT', () => {
 })
 
 describe('Given DELETE', () => {
-  describe(`When '/post/:id`, () => {
+  describe("When '/post/:id", () => {
     it('Then an admin is able to delete a post', async () => {
       let user = await users.findOne({where: { id: 0 } })
       const response = await mockRequest.delete('/post/0').set('Authorization', `Bearer ${user.token}`)
