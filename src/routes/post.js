@@ -1,8 +1,7 @@
 'use strict'
 
 const express = require('express')
-const { users } = require('../models/index')
-const { posts } = require('../models/index')
+const { users, posts } = require('../models/index')
 const postRouter = express.Router()
 
 const { acl , bearer } = require('../middleware/auth')
