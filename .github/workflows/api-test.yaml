@@ -39,7 +39,13 @@ jobs:
         with:
           node-version: '14'
           check-latest: true
-      - run: npm install
+      - uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
       - run: git diff --exit-code
   test:
     # The type of runner that the job will run on
