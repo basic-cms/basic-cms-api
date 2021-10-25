@@ -8,7 +8,7 @@ const { acl , bearer } = require('../middleware/auth')
 
 postRouter.get('/posts', handleGetAll)
 postRouter.get('/posts/:userId', handleGetAllByUser)
-postRouter.get('/post/:id', bearer(users), handleGetOne)
+postRouter.get('/post/:id', handleGetOne)
 postRouter.post('/post', bearer(users), acl('create'), handleCreate)
 postRouter.put('/post/:id', bearer(users), acl('update'), handleUpdate)
 postRouter.delete('/post/:id',bearer(users), acl('delete'), handleDelete)
@@ -27,7 +27,6 @@ async function handleCreate(req, res, next){
   try{
     req.post = req.body
     req.post.user_id = req.user.id
-    console.log(req.post)
     let newPost = await posts.create(req.post)
     res.status(200).json(newPost)
   }catch(e){
@@ -40,7 +39,7 @@ async function handleCreate(req, res, next){
 // GET 1 Post   if >=Writer
 async function handleGetOne(req,res,next){
   try{
-    postId = parseInt(req.params.id)
+    let postId = ~~req.params.id
     let getPost = await posts.findByPk(postId)
     res.status(200).json(getPost)
   }catch(e){
@@ -62,7 +61,7 @@ async function handleGetAllByUser(req,res,next) {
 // PUT 1 Post   if >=Editor
 async function handleUpdate(req,res,next){
   try{
-    let updatedPost = await posts.update(req.body ,{ where:{id:parseInt(req.params.id)}} )
+    let updatedPost = await posts.update(req.body, { where: {id: ~~req.params.id} })
     // why returns arr with single val === 1?
     res.status(200).json(updatedPost)
   }catch(e){
@@ -72,7 +71,7 @@ async function handleUpdate(req,res,next){
 // DEL 1 Post   if = Admin only
 async function handleDelete(req,res,next){
   try{
-    let deletedPost = await posts.destroy({ where:{id:parseInt(req.params.id)}} )
+    let deletedPost = await posts.destroy({ where:{id: ~~req.params.id} })
     res.status(200).json(deletedPost)
   }catch(e){
     console.error(e.message)
