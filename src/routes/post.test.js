@@ -2,9 +2,9 @@
 
 const supertest = require('supertest')
 const { db, posts, users } = require('../models')
-const server = require('../server')
+const { server } = require('../server')
 const { bearer } = require('../middleware/auth')
-const mockRequest = supertest(server.server)
+const mockRequest = supertest(server)
 
 beforeAll(async () => {
   await db.sync()
