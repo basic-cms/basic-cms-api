@@ -4,9 +4,9 @@ name: API Tests
 on:
   # Triggers the workflow on pull request events for dev and main
   pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   workflow_dispatch:
     inputs:
       logLevel:
