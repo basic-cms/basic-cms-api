@@ -1,4 +1,4 @@
-name: API Tests
+name: CI Checks
 
 # Controls when the action will run. 
 on:
@@ -18,11 +18,34 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains one job "test"
+  # This workflow contains multiple jobs
+  lint:
+  # Based on https://github.com/valora-inc/wallet/blob/main/.github/workflows/check.yml
+  lint: 
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-latest: true
+      - run: npm install
+      - run: npm run lint
+  package-lock:
+    name: 'package-lock.json Up-to-date'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-latest: true
+      - run: npm install
+      - run: git diff --exit-code
   test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -46,3 +69,5 @@ jobs:
         run: npm run ci:test
       - name: 'Upload to Codecov'
         uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
