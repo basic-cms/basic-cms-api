@@ -4,8 +4,8 @@
 const express = require('express')
 
 // Handlers and Routes
-// const errorHandler = require('./error-handlers/500')
-// const notFound = require('./error-handlers/404')
+const errorHandler = require('./error-handlers/500')
+const notFound = require('./error-handlers/404')
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
 const postRoutes = require('./routes/post')
@@ -34,8 +34,8 @@ app.use(userRoutes)
 app.use(postRoutes)
 
 // Use Handlers
-// app.use(notFound)
-// app.use(errorHandler)
+app.use(notFound)
+app.use(errorHandler)
 
 // Export modules
 module.exports = {
