@@ -27,6 +27,7 @@ async function handleCreate(req, res, next){
   try{
     req.post = req.body
     req.post.user_id = req.user.id
+    console.log(req.post)
     let newPost = await posts.create(req.post)
     res.status(200).json(newPost)
   }catch(e){
