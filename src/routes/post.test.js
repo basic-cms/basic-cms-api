@@ -178,7 +178,6 @@ describe('Given DELETE', () => {
     it('Then a user is unable to delete a post', async () => {
       let user = await users.findOne({where: { id: 1} })
       const response = await mockRequest.delete('/post/1').set('Authorization', `Bearer ${user.token}`)
-      console.log(response.body)
       expect(response.status).toStrictEqual(500)
     })
   })

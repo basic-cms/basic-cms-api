@@ -9,8 +9,8 @@
     "db:create": "sequelize db:create",
     "lint": "eslint .",
     "test-watch": "jest --watchAll",
-    "test": "jest --coverage --verbose",
-    "ci:test": "jest --coverage --verbose --silent"
+    "test": "jest --coverage --verbose --runInBand",
+    "ci:test": "jest --coverage --verbose --silent --runInBand"
   },
   "repository": {
     "type": "git",
